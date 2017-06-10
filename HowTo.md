@@ -13,8 +13,8 @@ echo $KERNEL_HASH
 On Ubuntu:
 mkdir ~/rpi
 cd ~/rpi
-###git clone https://github.com/raspberrypi/tools
-###export CCPREFIX=/home/${USER}/rpi/tools/arm-bcm2708/arm-bcm2708hardfp-linux-gnueabi/bin/arm-bcm2708hardfp-linux-gnueabi-
+rem   git clone https://github.com/raspberrypi/tools
+rem   export CCPREFIX=/home/${USER}/rpi/tools/arm-bcm2708/arm-bcm2708hardfp-linux-gnueabi/bin/arm-bcm2708hardfp-linux-gnueabi-
 sudo apt-get install crossbuild-essential-armhf
 export CCPREFIX=/usr/bin/arm-linux-gnueabihf-
 git clone https://github.com/raspberrypi/linux
