@@ -1,4 +1,4 @@
-### Kernel Compilation
+# Kernel Compilation
 _Based on http://lostindetails.com/blog/post/Compiling-a-kernel-module-for-the-raspberry-pi-2_
 
 ## Raspbian:
@@ -27,7 +27,7 @@ make ARCH=arm CROSS_COMPILE=${CCPREFIX} zImage modules dtbs-j3
 make ARCH=arm CROSS_COMPILE=${CCPREFIX} modules -j3
 make ARCH=arm CROSS_COMPILE=${CCPREFIX} INSTALL_MOD_PATH=/mnt/ext4 modules_install
 ```
-### Deployment
+# Deployment
 ## Kernel and modules
 ```
 mkdir /mnt/fat32
@@ -46,7 +46,7 @@ sudo umount /mnt/ext4
 scp ~/rpi/linux/drivers/video/fbtft/*.ko pi@192.168.1.108:~/fbtft
 ```
 ## Install and Test on PI
-# install.sh:
+### install.sh:
 
 ```
 #!/bin/bash
@@ -61,7 +61,7 @@ if [[ $1 == "1" ]]; then
         echo "Modules installed"
 fi
 ```
-# bash:
+### bash:
 ```
 ./install.sh 1
 ./fbtest --fbdev /dev/fb1
