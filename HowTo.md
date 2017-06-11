@@ -74,10 +74,13 @@ make
 
 # Autoload
 ```
-sudo nano "spi-bcm2835\nfbtft_device"
-/etc/modules-load.d/fbtft.conf
-```
-```
+sudo nano /etc/modules-load.d/fbtft.conf
+spi-bcm2835
+fbtft_device
+
 sudo nano /etc/modprobe.d/fbtft.conf
 options fbtft_device name=er_tftm070_48
+
+sudo nano /boot/cmdline.txt
+fbcon=map:11
 ```
