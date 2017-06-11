@@ -67,11 +67,12 @@ fi
 ./fbtest --fbdev /dev/fb1
 ```
 # Testing FB
+```
 git clone https://git.kernel.org/pub/scm/linux/kernel/git/geert/fbtest.git
 cd fbtest
 make
 ./fbtest --fbdev /dev/fb1
-
+```
 # Autoload
 ```
 sudo nano /etc/modules-load.d/fbtft.conf
