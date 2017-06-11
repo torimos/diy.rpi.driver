@@ -13,14 +13,15 @@ mkdir ~/fbtft
 mkdir ~/rpi
 cd ~/rpi
 sudo apt-get install crossbuild-essential-armhf
-export CCPREFIX=/usr/bin/arm-linux-gnueabihf-
 git clone https://github.com/raspberrypi/linux
+export CCPREFIX=/usr/bin/arm-linux-gnueabihf-
 export KERNEL_SRC=/home/${USER}/rpi/linux/ 
 export KERNEL=kernel
 cd $KERNEL_SRC
 git checkout $COPY_PAST_ABOVE_KERNEL_HASH
 make ARCH=arm CROSS_COMPILE=${CCPREFIX} bcmrpi_defconfig
-make ARCH=arm CROSS_COMPILE=${CCPREFIX} zImage modules dtbs-j3
+make ARCH=arm CROSS_COMPILE=${CCPREFIX} menuconfig
+sudo make ARCH=arm CROSS_COMPILE=${CCPREFIX} zImage modules dtbs-j3
 ```
 # Deployment
 ## Kernel and modules
@@ -29,7 +30,7 @@ mkdir /mnt/fat32
 mkdir /mnt/ext4
 sudo mount /dev/sdb1 /mnt/fat32
 sudo mount /dev/sdb2 /mnt/ext4
-make ARCH=arm CROSS_COMPILE=${CCPREFIX} INSTALL_MOD_PATH=/mnt/ext4 modules_install
+sudo make ARCH=arm CROSS_COMPILE=${CCPREFIX} INSTALL_MOD_PATH=/mnt/ext4 modules_install
 sudo cp arch/arm/boot/zImage /mnt/fat32/$KERNEL.img
 sudo cp arch/arm/boot/dts/*.dtb /mnt/fat32/
 sudo cp arch/arm/boot/dts/overlays/*.dtb* /mnt/fat32/overlays/
@@ -61,6 +62,10 @@ if [[ $1 == "1" ]]; then
         sudo insmod ~/fbtft/fbtft_device.ko name="er_tftm070_48"
         echo "Modules installed"
 fi
+```
+```
+sudo rmmod fbtft_device.ko;sudo rmmod fb_ra8875.ko;sudo rmmod fbtft.ko
+sudo insmod fbtft.ko;sudo insmod fb_ra8875.ko;sudo insmod fbtft_device.ko name="er_tftm070_48"
 ```
 ### bash:
 ```
