@@ -18,14 +18,30 @@ sudo apt-get install crossbuild-essential-armhf
 export CCPREFIX=/usr/bin/arm-linux-gnueabihf-
 git clone https://github.com/raspberrypi/linux
 export KERNEL_SRC=/home/${USER}/rpi/linux/ 
+export KERNEL=kernel
 cd $KERNEL_SRC
 git checkout $COPY_PAST_ABOVE_KERNEL_HASH
 sudo scp pi@192.168.1.108:~/config $KERNEL_SRC/.config
 make ARCH=arm CROSS_COMPILE=${CCPREFIX} oldconfig
-make ARCH=arm CROSS_COMPILE=${CCPREFIX} -j3
+make ARCH=arm CROSS_COMPILE=${CCPREFIX} zImage modules dtbs-j3
 make ARCH=arm CROSS_COMPILE=${CCPREFIX} modules -j3
+make ARCH=arm CROSS_COMPILE=${CCPREFIX} INSTALL_MOD_PATH=/mnt/ext4 modules_install
 ```
 ### Deployment
+## Kernel and modules
+```
+mkdir /mnt/fat32
+mkdir /mnt/ext4
+sudo mount /dev/sdb1 /mnt/fat32
+sudo mount /dev/sdb2 /mnt/ext4
+sudo cp arch/arm/boot/zImage /mnt/fat32/$KERNEL.img
+sudo cp arch/arm/boot/dts/*.dtb /mnt/fat32/
+sudo cp arch/arm/boot/dts/overlays/*.dtb* /mnt/fat32/overlays/
+sudo cp arch/arm/boot/dts/overlays/README /mnt/fat32/overlays/
+sudo umount /mnt/fat32
+sudo umount /mnt/ext4
+```
+## Specific kernel module
 ```
 scp ~/rpi/linux/drivers/video/fbtft/*.ko pi@192.168.1.108:~/fbtft
 ```
