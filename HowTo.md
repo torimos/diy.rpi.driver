@@ -24,7 +24,6 @@ git checkout $COPY_PAST_ABOVE_KERNEL_HASH
 sudo scp pi@192.168.1.108:~/config $KERNEL_SRC/.config
 make ARCH=arm CROSS_COMPILE=${CCPREFIX} oldconfig
 make ARCH=arm CROSS_COMPILE=${CCPREFIX} zImage modules dtbs-j3
-make ARCH=arm CROSS_COMPILE=${CCPREFIX} modules -j3
 ```
 # Deployment
 ## Kernel and modules
