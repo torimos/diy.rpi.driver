@@ -1,17 +1,16 @@
-###RPI Kernel Compilation
+### Kernel Compilation
+_Based on http://lostindetails.com/blog/post/Compiling-a-kernel-module-for-the-raspberry-pi-2_
 
-Based on http://lostindetails.com/blog/post/Compiling-a-kernel-module-for-the-raspberry-pi-2
-
-##On PI:
-#modprobe configs
+## Raspbian:
 ```
+modprobe configs
 sudo zcat /proc/config.gz > ~/config
 FIRMWARE_HASH=$(zgrep "* firmware as of" /usr/share/doc/raspberrypi-bootloader/changelog.Debian.gz | head -1 | awk '{ print $5 }')
 KERNEL_HASH=$(wget https://raw.github.com/raspberrypi/firmware/$FIRMWARE_HASH/extra/git_hash -O -)
 echo $KERNEL_HASH
 mkdir ~/fbtft
 ```
-##On Ubuntu:
+## Ubuntu:
 ```
 mkdir ~/rpi
 cd ~/rpi
@@ -26,11 +25,13 @@ make ARCH=arm CROSS_COMPILE=${CCPREFIX} oldconfig
 make ARCH=arm CROSS_COMPILE=${CCPREFIX} -j3
 make ARCH=arm CROSS_COMPILE=${CCPREFIX} modules -j3
 ```
-#Deploy to PI:
+### Deployment
+```
 scp ~/rpi/linux/drivers/video/fbtft/*.ko pi@192.168.1.108:~/fbtft
+```
+## Install and Test on PI
+# install.sh:
 
-##Install and Test on PI
-#install.sh:
 ```
 #!/bin/bash
 sudo rmmod fb_ra8875.ko -s
@@ -44,5 +45,8 @@ if [[ $1 == "1" ]]; then
         echo "Modules installed"
 fi
 ```
-#Bash:
-```./fbtest --fbdev /dev/fb1```
+# bash:
+```
+./install.sh 1
+./fbtest --fbdev /dev/fb1
+```
