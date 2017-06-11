@@ -41,11 +41,16 @@ sudo cp arch/arm/boot/dts/overlays/README /mnt/fat32/overlays/
 sudo umount /mnt/fat32
 sudo umount /mnt/ext4
 ```
+## Install and Test kernel modules on PI
+```
+sudo rmmod fbtft_device;sudo rmmod fb_ra8875;sudo rmmod fbtft;sudo rmmod spi_bcm2835
+sudo modprobe spi_bcm2835;sudo modprobe fbtft;sudo modprobe fb_ra8875;sudo modprobe fbtft_device
+```
 ## Specific kernel module
 ```
 scp ~/rpi/linux/drivers/video/fbtft/*.ko pi@192.168.1.108:~/fbtft
 ```
-## Install and Test on PI
+## Install and Test Specific modules on PI
 ### install.sh:
 
 ```
