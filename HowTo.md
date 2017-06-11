@@ -3,8 +3,8 @@ _Based on http://lostindetails.com/blog/post/Compiling-a-kernel-module-for-the-r
 
 ## Raspbian:
 ```
-modprobe configs
-sudo zcat /proc/config.gz > ~/config
+### modprobe configs
+### sudo zcat /proc/config.gz > ~/config
 FIRMWARE_HASH=$(zgrep "* firmware as of" /usr/share/doc/raspberrypi-bootloader/changelog.Debian.gz | head -1 | awk '{ print $5 }')
 KERNEL_HASH=$(wget https://raw.github.com/raspberrypi/firmware/$FIRMWARE_HASH/extra/git_hash -O -)
 echo $KERNEL_HASH
@@ -21,8 +21,9 @@ export KERNEL_SRC=/home/${USER}/rpi/linux/
 export KERNEL=kernel
 cd $KERNEL_SRC
 git checkout $COPY_PAST_ABOVE_KERNEL_HASH
-sudo scp pi@192.168.1.108:~/config $KERNEL_SRC/.config
-make ARCH=arm CROSS_COMPILE=${CCPREFIX} oldconfig
+###sudo scp pi@192.168.1.108:~/config $KERNEL_SRC/.config
+###make ARCH=arm CROSS_COMPILE=${CCPREFIX} oldconfig
+make ARCH=arm CROSS_COMPILE=${CCPREFIX} bcmrpi_defconfig
 make ARCH=arm CROSS_COMPILE=${CCPREFIX} zImage modules dtbs-j3
 ```
 # Deployment
