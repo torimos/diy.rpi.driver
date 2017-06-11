@@ -25,7 +25,6 @@ sudo scp pi@192.168.1.108:~/config $KERNEL_SRC/.config
 make ARCH=arm CROSS_COMPILE=${CCPREFIX} oldconfig
 make ARCH=arm CROSS_COMPILE=${CCPREFIX} zImage modules dtbs-j3
 make ARCH=arm CROSS_COMPILE=${CCPREFIX} modules -j3
-make ARCH=arm CROSS_COMPILE=${CCPREFIX} INSTALL_MOD_PATH=/mnt/ext4 modules_install
 ```
 # Deployment
 ## Kernel and modules
@@ -34,6 +33,7 @@ mkdir /mnt/fat32
 mkdir /mnt/ext4
 sudo mount /dev/sdb1 /mnt/fat32
 sudo mount /dev/sdb2 /mnt/ext4
+make ARCH=arm CROSS_COMPILE=${CCPREFIX} INSTALL_MOD_PATH=/mnt/ext4 modules_install
 sudo cp arch/arm/boot/zImage /mnt/fat32/$KERNEL.img
 sudo cp arch/arm/boot/dts/*.dtb /mnt/fat32/
 sudo cp arch/arm/boot/dts/overlays/*.dtb* /mnt/fat32/overlays/
